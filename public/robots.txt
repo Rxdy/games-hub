@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://game.rxdy.fr/sitemap.xml
+Sitemap: https://games.rxdy.fr/sitemap.xml

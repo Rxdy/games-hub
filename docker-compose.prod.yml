@@ -7,7 +7,7 @@ services:
     mem_limit: 64m
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.games-hub.rule=Host(`game.rxdy.fr`)"
+      - "traefik.http.routers.games-hub.rule=Host(`games.rxdy.fr`)"
       - "traefik.http.routers.games-hub.entrypoints=websecure"
       - "traefik.http.routers.games-hub.tls.certresolver=leresolver"
       - "traefik.http.services.games-hub.loadbalancer.server.port=80"

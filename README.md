@@ -1,4 +1,4 @@
-# games-hub — game.rxdy.fr
+# games-hub — games.rxdy.fr
 
 Le hub qui réunit les jeux de Rudy : une page d'accueil avec un bandeau par jeu, et une page de présentation
 par jeu avec un lien pour y jouer. **Ce site ne contient aucun jeu** et n'a pas de backend : ce sont des pages

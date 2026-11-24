@@ -19,7 +19,7 @@ export function usePageHead({ title, description, path, noindex }: PageHead) {
       { name: 'description', content: description },
       ...(noindex ? [{ name: 'robots', content: 'noindex' }] : []),
       { property: 'og:type', content: 'website' },
-      { property: 'og:site_name', content: 'game.rxdy.fr' },
+      { property: 'og:site_name', content: 'games.rxdy.fr' },
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:url', content: url },

@@ -2,7 +2,7 @@
 import { usePageHead } from '../head'
 
 usePageHead({
-  title: 'Page introuvable · game.rxdy.fr',
+  title: 'Page introuvable · games.rxdy.fr',
   description: 'Cette page n’existe pas.',
   path: '/404',
   noindex: true,

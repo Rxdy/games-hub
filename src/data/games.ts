@@ -18,7 +18,7 @@ export interface Game {
   motif: MotifName
 }
 
-export const siteUrl = 'https://game.rxdy.fr'
+export const siteUrl = 'https://games.rxdy.fr'
 export const portfolioUrl = 'https://rxdy.fr'
 
 export const games: Game[] = [

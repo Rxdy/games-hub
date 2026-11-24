@@ -7,9 +7,9 @@ import { portfolioUrl } from './data/games'
 
   <header class="site-header">
     <div class="wrap bar">
-      <RouterLink class="brand" to="/" aria-label="game.rxdy.fr, accueil">
+      <RouterLink class="brand" to="/" aria-label="games.rxdy.fr, accueil">
         <span class="brand-mark" aria-hidden="true"></span>
-        <span>game<span class="brand-dim">.rxdy.fr</span></span>
+        <span>games<span class="brand-dim">.rxdy.fr</span></span>
       </RouterLink>
       <a class="back" :href="portfolioUrl">← rxdy.fr</a>
     </div>

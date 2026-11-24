@@ -15,5 +15,5 @@ logs:
 build:  ## Génère les pages dans ./dist (Node 22 dans Docker, rien à installer)
 	docker run --rm -v $(CURDIR):/app -w /app node:22-alpine sh -c "npm ci --no-audit --no-fund && npm run build"
 
-prod:   ## Sur le Pi : (re)construit et publie sur game.rxdy.fr
+prod:   ## Sur le Pi : (re)construit et publie sur games.rxdy.fr
 	docker compose -f docker-compose.prod.yml up -d --build

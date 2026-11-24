@@ -10,7 +10,7 @@ const game = computed(() => findGame(props.slug))
 const others = computed(() => games.filter((g) => g.slug !== props.slug))
 
 usePageHead({
-  title: game.value ? `${game.value.title} · game.rxdy.fr` : 'Page introuvable · game.rxdy.fr',
+  title: game.value ? `${game.value.title} · games.rxdy.fr` : 'Page introuvable · games.rxdy.fr',
   description: game.value ? `${game.value.tagline} ${game.value.summary}` : 'Cette page n’existe pas.',
   path: `/${props.slug}`,
   noindex: !game.value,

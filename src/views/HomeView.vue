@@ -4,7 +4,7 @@ import { games, statusLabel } from '../data/games'
 import { usePageHead } from '../head'
 
 usePageHead({
-  title: 'Les jeux de Rudy · game.rxdy.fr',
+  title: 'Les jeux de Rudy · games.rxdy.fr',
   description:
     'Les jeux de Rudy réunis au même endroit : Duck, Queens et Train Tracks. Une page de présentation par jeu et un lien pour y jouer.',
   path: '/',
@@ -14,7 +14,7 @@ usePageHead({
 <template>
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">game.rxdy.fr</p>
+      <p class="eyebrow">games.rxdy.fr</p>
       <h1>Les jeux de Rudy</h1>
       <p class="lead">
         Trois jeux faits maison, réunis au même endroit. Chacun a sa page de présentation, et un lien
