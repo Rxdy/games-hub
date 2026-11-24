@@ -25,16 +25,40 @@ Pour un nouveau jeu : ajouter une entrée dans ce fichier, puis un motif (petit 
 [`src/components/GameMotif.vue`](src/components/GameMotif.vue), et l'adresse dans `public/sitemap.xml`.
 Pour Duck, renseigner `url` et passer `status` à `en-ligne` quand il sera jouable : le bouton « Jouer » apparaît.
 
-## Mise en ligne (Raspberry Pi, Traefik)
+## CI/CD et releases
 
-Le DNS `*.rxdy.fr` et Traefik sont déjà en place (voir le dépôt `infra`) : il suffit des labels de
-[`docker-compose.prod.yml`](docker-compose.prod.yml).
+Même chemin que les autres projets (`traintracks`, `queens`, `portfolio`) : GitHub construit l'image, GHCR la
+stocke, Watchtower la déploie sur le Pi.
+
+| Événement | Workflow | Ce qui se passe |
+|---|---|---|
+| Demande de fusion | [`ci.yml`](.github/workflows/ci.yml) | Types, compilation, pages générées (une par jeu, accueil, 404), puis l'image servie par nginx et de vraies requêtes |
+| Fusion dans `main` | [`images.yml`](.github/workflows/images.yml) | La CI, puis l'image `amd64` + `arm64` publiée sur `ghcr.io/rxdy/games-hub` en `latest`. Watchtower la déploie sur le Pi (vérification toutes les 5 minutes). |
+| Tag `vX.Y.Z` | [`release.yml`](.github/workflows/release.yml) | L'image de ce commit reçoit le tag de version (jamais reconstruite), et une release GitHub est créée avec le site compilé en archive |
+
+Publier une version :
 
 ```bash
-# sur le Pi
-git clone <ce dépôt> ~/games-hub && cd ~/games-hub
-make prod
+make release V=1.0.0     # tag v1.0.0 sur main ; la CI fait le reste
 ```
+
+`make release` refuse si on n'est pas sur `main`, si des modifications ne sont pas commitées, si `main` n'est pas
+identique à `origin/main`, ou si le tag existe déjà. Une version se pose toujours sur ce qui est déjà en production.
+
+Vérifier en local ce que vérifie la CI : `make check`.
+
+## Mise en ligne (Raspberry Pi, Traefik)
+
+Le DNS `*.rxdy.fr` et Traefik sont déjà en place (voir le dépôt `infra`). Sur le Pi, il suffit du fichier
+[`docker-compose.prod.yml`](docker-compose.prod.yml) : l'image vient de GHCR, rien n'est compilé sur le Pi.
+
+```bash
+# sur le Pi, une seule fois
+docker login ghcr.io          # indispensable tant que le dépôt (donc l'image) est privé
+make prod                     # ou : TAG=v1.0.0 make prod  pour une version précise
+```
+
+Ensuite, chaque fusion dans `main` met le site à jour sans rien faire (Watchtower).
 
 Le portfolio (`rxdy.fr`) renvoie vers ce hub ; le hub renvoie vers le portfolio (en-tête et pied de page).
 

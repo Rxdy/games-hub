@@ -1,0 +1,50 @@
+# Vérifie le hub : types, compilation, pages générées, puis l'image Docker réellement servie par nginx.
+# Lancé sur chaque demande de fusion, et rappelé par images.yml avant de publier une image.
+name: CI
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    name: Types, build, pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Types et compilation
+        run: npm run build
+      - name: Pages générées (une par jeu, accueil, 404)
+        run: scripts/verifier-dist.sh dist
+
+  image:
+    name: Image Docker
+    needs: site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - name: Construire l'image (sans la publier)
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: true
+          tags: games-hub:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Servir l'image et tester de vraies requêtes
+        run: |
+          docker run -d --name hub -p 8081:80 games-hub:ci
+          for i in $(seq 1 20); do curl -fs -o /dev/null http://localhost:8081/ && break; sleep 1; done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/queens/)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/inexistant)" = 404
+          curl -s http://localhost:8081/ | grep -q 'games.rxdy.fr'

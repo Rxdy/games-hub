@@ -1,16 +1,25 @@
-# Production sur le Pi : Traefik (repo infra) découvre ces labels tout seul,
-# le DNS *.rxdy.fr pointe déjà dessus, le certificat HTTPS est automatique.
+# Production sur le Pi : l'image est construite par la CI (images.yml) et tirée depuis GHCR.
+# Traefik (repo infra) découvre ces labels tout seul : le DNS *.rxdy.fr pointe déjà sur le Pi,
+# le certificat HTTPS est automatique.
+#
+# Lancer :  docker compose -f docker-compose.prod.yml up -d
+# Une version précise :  TAG=v1.0.0 docker compose -f docker-compose.prod.yml up -d
+name: games-hub
+
 services:
   hub:
-    build: .
+    image: ghcr.io/rxdy/games-hub:${TAG:-latest}
+    container_name: games-hub-prod
     restart: unless-stopped
     mem_limit: 64m
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.games-hub.rule=Host(`games.rxdy.fr`)"
-      - "traefik.http.routers.games-hub.entrypoints=websecure"
-      - "traefik.http.routers.games-hub.tls.certresolver=leresolver"
-      - "traefik.http.services.games-hub.loadbalancer.server.port=80"
+      # Watchtower (mode --label-enable) met l'image à jour quand un nouveau « latest » est publié.
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.games-hub.entrypoints=websecure
+      - traefik.http.routers.games-hub.rule=Host(`games.rxdy.fr`)
+      - traefik.http.routers.games-hub.tls.certresolver=leresolver
+      - traefik.http.services.games-hub.loadbalancer.server.port=80
     networks:
       - web
 
