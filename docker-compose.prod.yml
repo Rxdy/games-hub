@@ -1,0 +1,19 @@
+# Production sur le Pi : Traefik (repo infra) découvre ces labels tout seul,
+# le DNS *.rxdy.fr pointe déjà dessus, le certificat HTTPS est automatique.
+services:
+  hub:
+    build: .
+    restart: unless-stopped
+    mem_limit: 64m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.games-hub.rule=Host(`game.rxdy.fr`)"
+      - "traefik.http.routers.games-hub.entrypoints=websecure"
+      - "traefik.http.routers.games-hub.tls.certresolver=leresolver"
+      - "traefik.http.services.games-hub.loadbalancer.server.port=80"
+    networks:
+      - web
+
+networks:
+  web:
+    external: true

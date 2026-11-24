@@ -1,0 +1,6 @@
+# Aperçu local : http://localhost:8081
+services:
+  hub:
+    build: .
+    ports:
+      - "8081:80"
