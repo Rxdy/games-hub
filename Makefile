@@ -1,4 +1,7 @@
-.PHONY: up down logs build prod
+.PHONY: up down logs build prod dev
+
+dev:    ## Mode développement avec rechargement automatique : http://localhost:5173
+	docker run --rm -it -p 5173:5173 -v $(CURDIR):/app -w /app node:22-alpine sh -c "npm ci --no-audit --no-fund && npm run dev -- --host 0.0.0.0"
 
 up:     ## Aperçu local sur http://localhost:8081
 	docker compose up -d --build
