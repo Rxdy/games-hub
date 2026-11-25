@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { MotifName } from '../../data/games'
+import { QUEEN_BOX, QUEEN_PATH } from '../../data/queenPath'
 
 defineProps<{ name: MotifName }>()
 
@@ -18,6 +19,10 @@ const queens = [
   [3, 1],
   [4, 4],
 ]
+// Reine de 22 px centrée dans sa case de 30 px (le tracé source fait 640 px de côté).
+const QUEEN_SIZE = 22
+const queenTransform = (r: number, c: number) =>
+  `translate(${55 + c * 32 - QUEEN_SIZE / 2} ${15 + r * 32 - QUEEN_SIZE / 2}) scale(${QUEEN_SIZE / QUEEN_BOX})`
 const isQueen = (r: number, c: number) => queens.some(([qr, qc]) => qr === r && qc === c)
 </script>
 
@@ -58,7 +63,7 @@ const isQueen = (r: number, c: number) => queens.some(([qr, qc]) => qr === r && 
             rx="4"
             :class="`zone zone-${z}`"
           />
-          <circle v-if="isQueen(r, c)" :cx="55 + c * 32" :cy="15 + r * 32" r="8" class="queen" />
+          <path v-if="isQueen(r, c)" :d="QUEEN_PATH" :transform="queenTransform(r, c)" class="queen" />
         </g>
       </template>
     </g>
