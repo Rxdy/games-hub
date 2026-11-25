@@ -7,6 +7,7 @@
   --color-text-muted: #58606d;
   --color-primary: #2f5bd0;
   --color-primary-hover: #244aac;
+  --color-on-primary: #ffffff;
   --color-accent: #e0a020;
   --color-online: #187a4d;
   --color-online-bg: #e3f6ec;
@@ -25,7 +26,8 @@
     --color-text: #e6e8ec;
     --color-text-muted: #9aa2b1;
     --color-primary: #6c8cff;
-    --color-primary-hover: #5577f5;
+    --color-primary-hover: #8aa3ff;
+    --color-on-primary: #0f1115;
     --color-accent: #f2b84b;
     --color-online: #4fd88a;
     --color-online-bg: #123322;
@@ -119,7 +121,7 @@ p {
   left: 1rem;
   top: -4rem;
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-primary);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   z-index: 10;
@@ -128,63 +130,7 @@ p {
   top: 1rem;
 }
 
-/* ---------- En-tête / pied ---------- */
-.site-header {
-  padding-block: 1.2rem;
-}
-.bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-weight: 800;
-  font-size: 1.15rem;
-  text-decoration: none;
-  letter-spacing: -0.01em;
-}
-.brand-dim {
-  color: var(--color-text-muted);
-  font-weight: 600;
-}
-.brand-mark {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background:
-    linear-gradient(var(--color-primary) 0 0) 0 0 / 9px 9px no-repeat,
-    linear-gradient(var(--color-accent) 0 0) 100% 100% / 9px 9px no-repeat,
-    linear-gradient(var(--color-border) 0 0) 100% 0 / 9px 9px no-repeat,
-    linear-gradient(var(--color-border) 0 0) 0 100% / 9px 9px no-repeat;
-}
-.back {
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-.back:hover {
-  color: var(--color-text);
-}
-
-.site-footer {
-  margin-top: 5rem;
-  padding-block: 2rem 3rem;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  font-size: 0.92rem;
-}
-.site-footer p {
-  margin: 0 0 0.3rem;
-}
-
-/* ---------- Accueil ---------- */
-.hero {
-  padding-block: 3rem 2.5rem;
-}
+/* ---------- Texte d'introduction, partagé par plusieurs pages ---------- */
 .eyebrow {
   color: var(--color-primary);
   font-weight: 700;
@@ -199,238 +145,13 @@ p {
   max-width: 38rem;
   margin-top: 1rem;
 }
-
-.bands {
-  display: grid;
-  gap: 1.2rem;
+.page-hero {
+  padding-block: 3rem 2.5rem;
 }
 
-/* Chaque jeu : un bandeau pleine largeur, cliquable. */
-.band {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 2rem;
-  align-items: center;
-  padding: 2rem 2.2rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.band:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-primary);
-  box-shadow: 0 14px 40px -18px color-mix(in srgb, var(--color-primary) 55%, transparent);
-}
-.band-index {
-  color: var(--color-text-muted);
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-.band h2 {
-  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
-  letter-spacing: -0.025em;
-  margin-bottom: 0.4rem;
-}
-.band-tagline {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-.band-summary {
-  color: var(--color-text-muted);
-  margin-bottom: 1.2rem;
-}
-.band-foot {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.more {
-  font-weight: 700;
-  color: var(--color-primary);
-}
-.band:hover .more span {
-  display: inline-block;
-  transform: translateX(4px);
-}
-.band-art {
-  max-width: 360px;
-  justify-self: end;
-  width: 100%;
-}
-
-/* ---------- Pastille d'état ---------- */
-.status {
-  display: inline-block;
-  padding: 0.2rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-.status[data-status='en-ligne'] {
-  color: var(--color-online);
-  background: var(--color-online-bg);
-}
-.status[data-status='en-developpement'] {
-  color: var(--color-soon);
-  background: var(--color-soon-bg);
-}
-
-/* ---------- Page d'un jeu ---------- */
-.game-hero {
-  padding-block: 1.5rem 2rem;
-}
-.game-hero-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 2.5rem;
-  align-items: center;
-}
-.crumb {
-  display: inline-block;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  margin-bottom: 1.2rem;
-  font-size: 0.95rem;
-}
-.crumb:hover {
-  color: var(--color-text);
-}
-.cta-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 1.6rem;
-}
-.btn {
-  display: inline-block;
-  background: var(--color-primary);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 0.8rem 1.4rem;
-  border-radius: 12px;
-  transition: background 0.15s ease;
-}
-.btn:hover {
-  background: var(--color-primary-hover);
-}
-.btn-off {
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  border: 1px dashed var(--color-border);
-  cursor: not-allowed;
-}
-.hero-art {
-  padding: 1.4rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-}
-
-section.wrap {
-  margin-top: 3rem;
-}
-.prose {
-  max-width: 44rem;
-  margin-inline: auto;
-  width: min(44rem, 100% - 2rem);
-}
-.prose p {
-  font-size: 1.1rem;
-}
-
-.features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1rem;
-}
-.features li {
-  padding: 1.2rem 1.3rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-}
-.features p {
-  color: var(--color-text-muted);
-  margin: 0;
-  font-size: 0.97rem;
-}
-
-.tags {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-.tags li {
-  padding: 0.3rem 0.9rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 600;
-}
-
-.others-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.other {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem 1.2rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  text-decoration: none;
-  transition: border-color 0.15s ease;
-}
-.other:hover {
-  border-color: var(--color-primary);
-}
-.other p {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
-}
-
-/* ---------- Mobile ---------- */
 @media (max-width: 760px) {
   body {
     font-size: 16px;
-  }
-  .band,
-  .game-hero-grid {
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
-  }
-  .band {
-    padding: 1.5rem 1.3rem;
-  }
-  .band-art {
-    justify-self: start;
-    max-width: 280px;
-    order: -1;
-  }
-  .hero-art {
-    max-width: 340px;
   }
 }
 

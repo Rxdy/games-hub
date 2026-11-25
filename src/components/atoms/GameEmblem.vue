@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { MotifName } from '../data/games'
+// L'emblème d'un jeu : un dessin de marque, décoratif. Ce n'est PAS une capture d'écran
+// et le site ne le présente jamais comme tel (les vraies captures sont des MediaImage).
+import type { EmblemName } from '../../domain/game'
 
-defineProps<{ name: MotifName }>()
+defineProps<{ name: EmblemName }>()
 
-// Plateau de Queens : numéro de zone de chaque case, et position des reines (ligne, colonne).
+// Emblème de Queens : numéro de zone de chaque case, et position des reines (ligne, colonne).
 const zones = [
   [0, 0, 1, 1, 1],
   [0, 2, 2, 1, 3],
@@ -19,45 +21,38 @@ const queens = [
   [4, 4],
 ]
 const isQueen = (r: number, c: number) => queens.some(([qr, qc]) => qr === r && qc === c)
+
+// Emblème de Duck : 4×4 cases losanges en vue isométrique ; les bases sont les deux coins gauche et droit.
+const isoTiles = Array.from({ length: 16 }, (_, n) => {
+  const i = Math.floor(n / 4)
+  const j = n % 4
+  const cx = 120 + (i - j) * 28
+  const cy = 40 + (i + j) * 14
+  return {
+    key: `${i}-${j}`,
+    points: `${cx},${cy - 14} ${cx + 28},${cy} ${cx},${cy + 14} ${cx - 28},${cy}`,
+    base: (i === 0 && j === 3) || (i === 3 && j === 0),
+  }
+})
 </script>
 
 <template>
-  <svg class="motif" viewBox="0 0 240 160" role="img" aria-hidden="true" focusable="false">
-    <!-- Duck : une grille, deux bases, un canard entre les deux -->
+  <svg class="emblem" :data-emblem="name" viewBox="0 0 240 160" role="img" aria-hidden="true" focusable="false">
+    <!-- Duck : un plateau en vue isométrique, deux bases aux coins, un canard-mascotte dans le coin -->
     <g v-if="name === 'duck'">
-      <template v-for="r in 5" :key="r">
-        <rect
-          v-for="c in 8"
-          :key="`${r}-${c}`"
-          :x="10 + (c - 1) * 28"
-          :y="10 + (r - 1) * 28"
-          width="24"
-          height="24"
-          rx="5"
-          class="cell"
-        />
-      </template>
-      <rect x="10" y="66" width="24" height="24" rx="5" class="base" />
-      <rect x="206" y="66" width="24" height="24" rx="5" class="base" />
-      <path d="M38 78 H96" class="trail" />
-      <circle cx="122" cy="80" r="15" class="duck-body" />
-      <circle cx="133" cy="66" r="9" class="duck-body" />
-      <path d="M140 64 l11 4 l-11 4 z" class="duck-beak" />
-      <circle cx="135" cy="64" r="1.8" class="duck-eye" />
+      <polygon v-for="t in isoTiles" :key="t.key" :points="t.points" :class="t.base ? 'base' : 'cell'" />
+      <g transform="translate(200 20)">
+        <circle cx="0" cy="4" r="9" class="duck-body" />
+        <circle cx="7" cy="-4" r="6" class="duck-body" />
+        <path d="M12 -5 l8 3 l-8 3 z" class="duck-beak" />
+      </g>
     </g>
 
-    <!-- Queens : un plateau de zones colorées, une reine par zone -->
+    <!-- Queens : des zones colorées, une reine par zone -->
     <g v-else-if="name === 'queens'">
       <template v-for="(row, r) in zones" :key="r">
         <g v-for="(z, c) in row" :key="`${r}-${c}`">
-          <rect
-            :x="40 + c * 32"
-            :y="0 + r * 32"
-            width="30"
-            height="30"
-            rx="4"
-            :class="`zone zone-${z}`"
-          />
+          <rect :x="40 + c * 32" :y="r * 32" width="30" height="30" rx="4" :class="`zone zone-${z}`" />
           <circle v-if="isQueen(r, c)" :cx="55 + c * 32" :cy="15 + r * 32" r="8" class="queen" />
         </g>
       </template>
@@ -75,7 +70,7 @@ const isQueen = (r: number, c: number) => queens.some(([qr, qc]) => qr === r && 
 </template>
 
 <style scoped>
-.motif {
+.emblem {
   width: 100%;
   height: auto;
   display: block;
@@ -83,25 +78,19 @@ const isQueen = (r: number, c: number) => queens.some(([qr, qc]) => qr === r && 
 .cell {
   fill: var(--color-border);
   opacity: 0.55;
+  stroke: var(--color-bg);
+  stroke-width: 2;
 }
 .base {
   fill: var(--color-primary);
-}
-.trail {
-  stroke: var(--color-primary);
-  stroke-width: 3;
-  stroke-dasharray: 2 8;
-  stroke-linecap: round;
-  fill: none;
+  stroke: var(--color-bg);
+  stroke-width: 2;
 }
 .duck-body {
   fill: var(--color-accent);
 }
 .duck-beak {
   fill: var(--color-primary);
-}
-.duck-eye {
-  fill: var(--color-bg);
 }
 .zone-0 { fill: hsl(215 80% 62% / 0.55); }
 .zone-1 { fill: hsl(160 60% 48% / 0.55); }

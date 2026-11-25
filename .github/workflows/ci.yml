@@ -20,6 +20,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Tests unitaires et d'intégration
+        run: npm test
       - name: Types et compilation
         run: npm run build
       - name: Pages générées (une par jeu, accueil, 404)
@@ -48,3 +50,12 @@ jobs:
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/queens/)" = 200
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/inexistant)" = 404
           curl -s http://localhost:8081/ | grep -q 'games.rxdy.fr'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Tests e2e (navigateurs, accessibilité) sur l'image servie
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run test:e2e

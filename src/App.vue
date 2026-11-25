@@ -1,28 +1,15 @@
 <script setup lang="ts">
-import { portfolioUrl } from './data/games'
+import SiteFooter from './components/organisms/SiteFooter.vue'
+import SiteHeader from './components/organisms/SiteHeader.vue'
 </script>
 
 <template>
   <a class="skip" href="#contenu">Aller au contenu</a>
-
-  <header class="site-header">
-    <div class="wrap bar">
-      <RouterLink class="brand" to="/" aria-label="games.rxdy.fr, accueil">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>games<span class="brand-dim">.rxdy.fr</span></span>
-      </RouterLink>
-      <a class="back" :href="portfolioUrl">← rxdy.fr</a>
-    </div>
-  </header>
-
+  <SiteHeader />
   <main id="contenu">
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <component :is="Component" :key="route.path" />
+    </RouterView>
   </main>
-
-  <footer class="site-footer">
-    <div class="wrap">
-      <p>Les jeux de Rudy. Ce site présente les jeux, il n’en contient aucun.</p>
-      <p><a :href="portfolioUrl">rxdy.fr</a> · <a href="https://github.com/Rxdy">GitHub</a></p>
-    </div>
-  </footer>
+  <SiteFooter />
 </template>

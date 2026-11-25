@@ -18,12 +18,31 @@ Rien à installer à part Docker : le build tourne dans un conteneur Node 22.
 
 ## Ajouter ou modifier un jeu
 
-Tout le contenu est dans [`src/data/games.ts`](src/data/games.ts) : titre, accroche, description, points forts,
-technos, état (`en-ligne` / `en-developpement`) et adresse du jeu (`url`).
+Tout le contenu est dans [`src/data/games.ts`](src/data/games.ts) : titre, accroche, description, étapes de
+« Comment on joue », fiche, points forts, technos, état (`en-ligne` / `en-developpement`) et adresse du jeu (`url`).
 
-Pour un nouveau jeu : ajouter une entrée dans ce fichier, puis un motif (petit dessin SVG) dans
-[`src/components/GameMotif.vue`](src/components/GameMotif.vue), et l'adresse dans `public/sitemap.xml`.
+Pour un nouveau jeu : ajouter une entrée dans ce fichier, un emblème dans
+[`GameEmblem.vue`](src/components/atoms/GameEmblem.vue) (et son nom dans [`domain/game.ts`](src/domain/game.ts)),
+puis l'adresse dans `public/sitemap.xml`. `make test` vérifie que la fiche est complète.
 Pour Duck, renseigner `url` et passer `status` à `en-ligne` quand il sera jouable : le bouton « Jouer » apparaît.
+
+### Ajouter des captures
+
+Poser les images dans `public/`, puis les déclarer dans `media` (`src`, `alt`, `width`, `height`, `caption`
+facultative). La première s'affiche en haut de la page, toutes apparaissent dans la galerie.
+Sans capture, le site affiche l'emblème et « Aperçu bientôt » : un emblème n'est jamais présenté comme le jeu.
+
+## Composants
+
+`src/components/` : `atoms/` (bouton, pastille, image…), `molecules/` (fiche, cadre, bandeau…),
+`organisms/` (en-tête, pied de page, haut de page, galerie). Les pages de `src/views/` les assemblent.
+
+## Tests
+
+| Commande | Ce qui est testé |
+|---|---|
+| `make test` | Unitaires (`src/**/__tests__/`) et intégration avec le vrai routeur (`tests/integration/`) |
+| `make e2e` | `e2e/` : navigation, vraie 404, accessibilité (axe), thèmes clair et sombre, bureau et mobile |
 
 ## CI/CD et releases
 
@@ -32,7 +51,7 @@ stocke, Watchtower la déploie sur le Pi.
 
 | Événement | Workflow | Ce qui se passe |
 |---|---|---|
-| Demande de fusion | [`ci.yml`](.github/workflows/ci.yml) | Types, compilation, pages générées (une par jeu, accueil, 404), puis l'image servie par nginx et de vraies requêtes |
+| Demande de fusion | [`ci.yml`](.github/workflows/ci.yml) | Tests unitaires et d'intégration, types, compilation, pages générées (une par jeu, accueil, 404), puis l'image servie par nginx, de vraies requêtes et les tests e2e |
 | Fusion dans `main` | [`images.yml`](.github/workflows/images.yml) | La CI, puis l'image `amd64` + `arm64` publiée sur `ghcr.io/rxdy/games-hub` en `latest`. Watchtower la déploie sur le Pi (vérification toutes les 5 minutes). |
 | Tag `vX.Y.Z` | [`release.yml`](.github/workflows/release.yml) | L'image de ce commit reçoit le tag de version (jamais reconstruite), et une release GitHub est créée avec le site compilé en archive |
 
