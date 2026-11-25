@@ -19,10 +19,10 @@ describe('GameHero', () => {
     expect(w.find('[aria-disabled="true"]').text()).toBe('Pas encore jouable')
     expect(w.find('a.btn').exists()).toBe(false)
   })
-  it('un seul h1 (le titre du jeu), lien de retour vers l’accueil', () => {
+  it('un seul h1 (le titre du jeu), pas de lien de retour', () => {
     const w = mount(GameHero, { props: { game: findGame('traintracks')! }, global })
     expect(w.findAll('h1')).toHaveLength(1)
     expect(w.find('h1').text()).toBe('Train Tracks')
-    expect(w.findComponent(RouterLinkStub).props('to')).toBe('/')
+    expect(w.findComponent(RouterLinkStub).exists()).toBe(false)
   })
 })

@@ -40,7 +40,7 @@ test.describe('parcours', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Queens')
     await expect(page).toHaveTitle(/Queens · games\.rxdy\.fr/)
 
-    await page.getByRole('link', { name: '← Tous les jeux' }).click()
+    await page.getByRole('link', { name: 'games.rxdy.fr, accueil' }).click()
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Les jeux de Rudy')
   })
 

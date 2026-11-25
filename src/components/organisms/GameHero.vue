@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BackLink from '../atoms/BackLink.vue'
 import BaseButton from '../atoms/BaseButton.vue'
 import GameMotif from '../atoms/GameMotif.vue'
 import LeadText from '../atoms/LeadText.vue'
@@ -12,8 +11,7 @@ defineProps<{ game: Game }>()
 <template>
   <section class="game-hero">
     <div class="wrap grid">
-      <div>
-        <BackLink class="crumb" to="/">← Tous les jeux</BackLink>
+      <div class="text">
         <h1>{{ game.title }}</h1>
         <LeadText>{{ game.tagline }}</LeadText>
         <div class="cta-row">
@@ -37,10 +35,6 @@ defineProps<{ game: Game }>()
   gap: 2.5rem;
   align-items: center;
 }
-.crumb {
-  display: inline-block;
-  margin-bottom: 1.2rem;
-}
 .cta-row {
   display: flex;
   align-items: center;
@@ -55,10 +49,32 @@ defineProps<{ game: Game }>()
   border-radius: var(--radius);
 }
 
+/* Téléphone : l'illustration passe en bannière pleine largeur tout en haut, le texte dessous. */
 @media (max-width: 760px) {
+  .game-hero {
+    padding-block: 0 1rem;
+  }
   .grid {
+    width: 100%;
     grid-template-columns: 1fr;
-    gap: 1.4rem;
+    gap: 0;
+  }
+  .art {
+    order: -1;
+    display: flex;
+    justify-content: center;
+    padding: 1.3rem 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    background: color-mix(in srgb, var(--color-primary) 7%, var(--color-bg));
+  }
+  .art :deep(.motif) {
+    width: auto;
+    height: 150px;
+  }
+  .text {
+    padding: 1.2rem 1rem 0;
   }
 }
 </style>

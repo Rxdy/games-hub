@@ -25,7 +25,7 @@ test (`*.test.ts`) dans son fichier : pas de feuille CSS à part, sauf les varia
 [`App.vue`](src/App.vue).
 
 ```
-src/components/atoms/       BaseLink, BaseButton, BackLink, BrandMark, SkipLink, StatusBadge, TagChip, LeadText, GameMotif
+src/components/atoms/       BaseLink, BaseButton, BrandMark, SkipLink, StatusBadge, TagChip, LeadText, GameMotif
 src/components/molecules/   BrandLink, PageSection, PageHero, ProseBlock, FeatureCard, FeatureList, TagList, GameTeaser
 src/components/organisms/   SiteHeader, SiteFooter, GameBand, GameBandList, GameHero, OtherGames
 ```
