@@ -15,7 +15,9 @@ describe('GameHero', () => {
     expect(w.find('[aria-disabled]').exists()).toBe(false)
   })
   it('jeu pas encore jouable : bouton désactivé, aucun lien de jeu', () => {
-    const w = mount(GameHero, { props: { game: findGame('duck')! }, global })
+    // Aucun jeu du hub n'est dans cet état aujourd'hui : on le simule à partir d'un jeu existant.
+    const bientot = { ...findGame('duck')!, url: undefined, status: 'en-developpement' as const }
+    const w = mount(GameHero, { props: { game: bientot }, global })
     expect(w.find('[aria-disabled="true"]').text()).toBe('Pas encore jouable')
     expect(w.find('a.btn').exists()).toBe(false)
   })

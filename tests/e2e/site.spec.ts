@@ -44,14 +44,13 @@ test.describe('parcours', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Les jeux de Rudy')
   })
 
-  test('Queens et Train Tracks : « Jouer » mène au vrai jeu ; Duck : pas encore jouable', async ({ page }) => {
+  test('« Jouer » mène au vrai jeu, pour les trois jeux', async ({ page }) => {
     await page.goto('/queens/')
     await expect(page.getByRole('link', { name: /Jouer à Queens/ })).toHaveAttribute('href', 'https://queens.rxdy.fr')
     await page.goto('/traintracks/')
     await expect(page.getByRole('link', { name: /Jouer à Train Tracks/ })).toHaveAttribute('href', 'https://traintracks.rxdy.fr')
     await page.goto('/duck/')
-    await expect(page.getByRole('link', { name: /Jouer/ })).toHaveCount(0)
-    await expect(page.getByText('Pas encore jouable')).toBeVisible()
+    await expect(page.getByRole('link', { name: /Jouer à Duck/ })).toHaveAttribute('href', 'https://duck.rxdy.fr')
   })
 
   test('« Les autres jeux » ouvre un autre jeu', async ({ page }) => {

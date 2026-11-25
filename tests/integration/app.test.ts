@@ -51,12 +51,10 @@ describe('site complet', () => {
     expect(wrapper.find(`a.teaser[href="/${game.slug}"]`).exists()).toBe(false)
   })
 
-  it('jeu en ligne : « Jouer » ; jeu en développement : bouton désactivé', async () => {
-    const queens = await ouvrir('/queens')
-    expect(queens.wrapper.find('a.btn').attributes('href')).toBe('https://queens.rxdy.fr')
-    const duck = await ouvrir('/duck')
-    expect(duck.wrapper.find('[aria-disabled="true"]').text()).toBe('Pas encore jouable')
-    expect(duck.wrapper.find('a.btn').exists()).toBe(false)
+  it.each(games.filter((g) => g.url))('jeu en ligne « $slug » : le bouton « Jouer » mène au vrai jeu', async (game) => {
+    const { wrapper } = await ouvrir(`/${game.slug}`)
+    expect(wrapper.find('a.btn').attributes('href')).toBe(game.url)
+    expect(wrapper.find('[aria-disabled="true"]').exists()).toBe(false)
   })
 
   it.each(['/nimporte-quoi', '/a/b/c', '/404'])('adresse inconnue %s : page introuvable avec retour à l’accueil', async (chemin) => {

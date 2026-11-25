@@ -60,8 +60,9 @@ export const games: Game[] = [
       { title: 'Éditeur de cartes', text: 'Les cartes se créent et se modifient avec un éditeur dédié.' },
       { title: 'Cartes générées', text: 'Un générateur propose des plateaux différents d’une partie à l’autre.' },
     ],
-    tags: ['TypeScript', 'React', 'Three.js', 'WebSocket', 'Node.js'],
-    status: 'en-developpement',
+    tags: ['TypeScript', 'Vue 3', 'Three.js', 'WebSocket', 'Node.js', 'PostgreSQL'],
+    status: 'en-ligne',
+    url: 'https://duck.rxdy.fr',
     motif: 'duck',
   },
   {

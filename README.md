@@ -50,7 +50,7 @@ technos, état (`en-ligne` / `en-developpement`) et adresse du jeu (`url`).
 
 Pour un nouveau jeu : ajouter une entrée dans ce fichier, puis un motif (petit dessin SVG) dans
 [`src/components/GameMotif.vue`](src/components/GameMotif.vue), et l'adresse dans `public/sitemap.xml`.
-Pour Duck, renseigner `url` et passer `status` à `en-ligne` quand il sera jouable : le bouton « Jouer » apparaît.
+Tant qu'un jeu n'est pas jouable, laisser `url` vide et `status` à `en-developpement` : le bouton « Jouer » est alors désactivé.
 
 ## CI/CD et releases
 
