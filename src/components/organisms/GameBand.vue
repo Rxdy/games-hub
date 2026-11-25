@@ -10,7 +10,7 @@ defineProps<{ game: Game; index: number }>()
 
 <template>
   <BaseLink class="band" :to="`/${game.slug}`">
-    <div>
+    <div class="body">
       <p class="index">0{{ index + 1 }}</p>
       <h2>{{ game.title }}</h2>
       <p class="tagline">{{ game.tagline }}</p>
@@ -85,16 +85,46 @@ h2 {
   width: 100%;
 }
 
+/* Téléphone : bannière illustrée en haut de la carte, texte dessous. */
 @media (max-width: 760px) {
   .band {
     grid-template-columns: 1fr;
-    gap: 1.4rem;
-    padding: 1.5rem 1.3rem;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
   }
   .art {
-    justify-self: start;
-    max-width: 280px;
     order: -1;
+    max-width: none;
+    justify-self: stretch;
+    display: flex;
+    justify-content: center;
+    padding: 1.3rem 1rem;
+    background: color-mix(in srgb, var(--color-primary) 7%, var(--color-bg));
+    border-bottom: 1px solid var(--color-border);
+  }
+  .art :deep(.motif) {
+    width: auto;
+    height: 140px;
+  }
+  .body {
+    padding: 1.2rem 1.3rem 1.4rem;
+  }
+  .index {
+    margin-bottom: 0.2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  .summary {
+    margin-bottom: 1.1rem;
+  }
+  .foot {
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
   }
 }
 </style>
