@@ -8,7 +8,9 @@ test.describe('affichage', () => {
     test(`${chemin} : pas de défilement horizontal, pas d'erreur console`, async ({ page }) => {
       const erreurs: string[] = []
       page.on('pageerror', (e) => erreurs.push(e.message))
-      page.on('console', (m) => m.type() === 'error' && erreurs.push(m.text()))
+      // Sur la page 404, le navigateur journalise lui-même le 404 de la page (vrai nginx en production) : normal.
+      const est404 = chemin === '/inexistant'
+      page.on('console', (m) => m.type() === 'error' && !(est404 && /status of 404/.test(m.text())) && erreurs.push(m.text()))
       await page.goto(chemin)
       await expect(page.locator('h1')).toHaveCount(1)
       const debordement = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
