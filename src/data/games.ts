@@ -20,6 +20,7 @@ export interface Game {
 
 export const siteUrl = 'https://games.rxdy.fr'
 export const portfolioUrl = 'https://rxdy.fr'
+export const githubUrl = 'https://github.com/Rxdy'
 
 export const games: Game[] = [
   {

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import BaseButton from '../components/atoms/BaseButton.vue'
+import LeadText from '../components/atoms/LeadText.vue'
+import PageHero from '../components/molecules/PageHero.vue'
 import { usePageHead } from '../head'
 
 usePageHead({
@@ -10,12 +13,8 @@ usePageHead({
 </script>
 
 <template>
-  <section class="hero">
-    <div class="wrap">
-      <p class="eyebrow">404</p>
-      <h1>Page introuvable</h1>
-      <p class="lead">Cette page n’existe pas, ou plus.</p>
-      <p><RouterLink class="btn" to="/">Voir tous les jeux</RouterLink></p>
-    </div>
-  </section>
+  <PageHero eyebrow="404" title="Page introuvable">
+    <LeadText>Cette page n’existe pas, ou plus.</LeadText>
+    <p><BaseButton to="/">Voir tous les jeux</BaseButton></p>
+  </PageHero>
 </template>

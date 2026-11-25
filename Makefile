@@ -1,4 +1,4 @@
-.PHONY: up down logs build check dev prod release
+.PHONY: up down logs build check test e2e image dev prod release
 
 up:     ## Aperçu local sur http://localhost:8081
 	docker compose up -d --build
@@ -17,6 +17,15 @@ build:  ## Génère les pages dans ./dist (Node 22 dans Docker, rien à installe
 
 check: build ## Compile puis vérifie les pages générées (ce que fait la CI)
 	scripts/verifier-dist.sh dist
+
+test:   ## Tests unitaires et d'intégration (Vitest)
+	npm test
+
+e2e: build ## Tests e2e Playwright, bureau + téléphone (npx playwright install chromium la première fois)
+	npm run test:e2e
+
+image:  ## Construit l'image et teste de vraies requêtes HTTP dessus
+	docker build -t games-hub:ci . && scripts/tester-image.sh games-hub:ci
 
 prod:   ## Sur le Pi : tire l'image depuis GHCR et la lance sur games.rxdy.fr (TAG=v1.0.0 pour une version précise)
 	docker compose -f docker-compose.prod.yml up -d

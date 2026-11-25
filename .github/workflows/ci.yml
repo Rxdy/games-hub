@@ -1,4 +1,4 @@
-# Vérifie le hub : types, compilation, pages générées, puis l'image Docker réellement servie par nginx.
+# Vérifie le hub : types, compilation, tests (unitaires, intégration, e2e), puis l'image Docker réellement servie par nginx.
 # Lancé sur chaque demande de fusion, et rappelé par images.yml avant de publier une image.
 name: CI
 
@@ -25,9 +25,46 @@ jobs:
       - name: Pages générées (une par jeu, accueil, 404)
         run: scripts/verifier-dist.sh dist
 
+  tests:
+    name: Tests unitaires et intégration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  e2e:
+    name: Tests e2e (bureau + téléphone)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - name: Rapport et captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
   image:
     name: Image Docker
-    needs: site
+    needs: [site, tests, e2e]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,10 +78,4 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Servir l'image et tester de vraies requêtes
-        run: |
-          docker run -d --name hub -p 8081:80 games-hub:ci
-          for i in $(seq 1 20); do curl -fs -o /dev/null http://localhost:8081/ && break; sleep 1; done
-          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/)" = 200
-          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/queens/)" = 200
-          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/inexistant)" = 404
-          curl -s http://localhost:8081/ | grep -q 'games.rxdy.fr'
+        run: scripts/tester-image.sh games-hub:ci

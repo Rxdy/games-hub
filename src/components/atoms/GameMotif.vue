@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MotifName } from '../data/games'
+import type { MotifName } from '../../data/games'
 
 defineProps<{ name: MotifName }>()
 
