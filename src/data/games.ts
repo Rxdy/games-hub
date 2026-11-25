@@ -24,26 +24,6 @@ export const githubUrl = 'https://github.com/Rxdy'
 
 export const games: Game[] = [
   {
-    slug: 'duck',
-    title: 'Duck',
-    tagline: 'Un duel de canards sur une grille, en ligne.',
-    summary:
-      'Jeu multijoueur en ligne sur grille, inspiré des mini-jeux créés avec les Wired de Habbo Hotel.',
-    description: [
-      'Chaque joueur contrôle un canard sur un plateau. Le but : atteindre la base adverse pour marquer des points, avant que l’autre équipe n’en fasse autant.',
-      'Les règles sont gérées par un serveur qui fait autorité : tout le monde voit la même partie, au même moment.',
-    ],
-    features: [
-      { title: 'Multijoueur en temps réel', text: 'Les parties se jouent à plusieurs, en ligne, avec un serveur unique qui arbitre.' },
-      { title: 'Rendu 3D', text: 'Le plateau et les canards sont affichés en 3D directement dans le navigateur.' },
-      { title: 'Éditeur de cartes', text: 'Les cartes se créent et se modifient avec un éditeur dédié.' },
-      { title: 'Cartes générées', text: 'Un générateur propose des plateaux différents d’une partie à l’autre.' },
-    ],
-    tags: ['TypeScript', 'React', 'Three.js', 'WebSocket', 'Node.js'],
-    status: 'en-developpement',
-    motif: 'duck',
-  },
-  {
     slug: 'queens',
     title: 'Queens',
     tagline: 'Une reine par zone, aucune ne se touche.',
@@ -63,6 +43,26 @@ export const games: Game[] = [
     status: 'en-ligne',
     url: 'https://queens.rxdy.fr',
     motif: 'queens',
+  },
+  {
+    slug: 'duck',
+    title: 'Duck',
+    tagline: 'Un duel de canards sur une grille, en ligne.',
+    summary:
+      'Jeu multijoueur en ligne sur grille, inspiré des mini-jeux créés avec les Wired de Habbo Hotel.',
+    description: [
+      'Chaque joueur contrôle un canard sur un plateau. Le but : atteindre la base adverse pour marquer des points, avant que l’autre équipe n’en fasse autant.',
+      'Les règles sont gérées par un serveur qui fait autorité : tout le monde voit la même partie, au même moment.',
+    ],
+    features: [
+      { title: 'Multijoueur en temps réel', text: 'Les parties se jouent à plusieurs, en ligne, avec un serveur unique qui arbitre.' },
+      { title: 'Rendu 3D', text: 'Le plateau et les canards sont affichés en 3D directement dans le navigateur.' },
+      { title: 'Éditeur de cartes', text: 'Les cartes se créent et se modifient avec un éditeur dédié.' },
+      { title: 'Cartes générées', text: 'Un générateur propose des plateaux différents d’une partie à l’autre.' },
+    ],
+    tags: ['TypeScript', 'React', 'Three.js', 'WebSocket', 'Node.js'],
+    status: 'en-developpement',
+    motif: 'duck',
   },
   {
     slug: 'traintracks',

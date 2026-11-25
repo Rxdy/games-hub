@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { findGame, games, githubUrl, portfolioUrl, siteUrl, statusLabel } from './games'
 
 describe('données des jeux', () => {
-  it('trois jeux, dans l’ordre Duck, Queens, Train Tracks', () => {
-    expect(games.map((g) => g.slug)).toEqual(['duck', 'queens', 'traintracks'])
+  it('trois jeux, dans l’ordre Queens, Duck, Train Tracks', () => {
+    expect(games.map((g) => g.slug)).toEqual(['queens', 'duck', 'traintracks'])
   })
   it('slugs uniques et utilisables dans une adresse', () => {
     const slugs = games.map((g) => g.slug)

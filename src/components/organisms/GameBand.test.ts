@@ -9,7 +9,7 @@ const global = { stubs: { RouterLink: RouterLinkStub } }
 describe('GameBand', () => {
   it('tout le bandeau mène à la page du jeu', () => {
     const w = mount(GameBand, { props: { game: games[0], index: 0 }, global })
-    expect(w.findComponent(RouterLinkStub).props('to')).toBe('/duck')
+    expect(w.findComponent(RouterLinkStub).props('to')).toBe('/queens')
   })
   it('numérote à partir de 01', () => {
     expect(mount(GameBand, { props: { game: games[0], index: 0 }, global }).find('.index').text()).toBe('01')

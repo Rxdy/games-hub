@@ -8,7 +8,7 @@ import { usePageHead } from '../head'
 usePageHead({
   title: 'Les jeux de Rudy · games.rxdy.fr',
   description:
-    'Les jeux de Rudy réunis au même endroit : Duck, Queens et Train Tracks. Une page de présentation par jeu et un lien pour y jouer.',
+    'Les jeux de Rudy réunis au même endroit : Queens, Duck et Train Tracks. Une page de présentation par jeu et un lien pour y jouer.',
   path: '/',
 })
 </script>
